@@ -1,42 +1,28 @@
-package sps.consultoria.dslist.entidades;
+package sps.consultoria.dslist.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import org.springframework.beans.BeanUtils;
+import sps.consultoria.dslist.entidades.Game;
 
-import java.util.Objects;
+public class GameDTO {
 
-@Entity
-@Table(name = "tb_game")
-public class Game {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
     private Integer ano;
     private String genero;
     private String plataforma;
     private String imgUrl;
-    @Column(columnDefinition = "TEXT")
     private String descricaoCurta;
-    @Column(columnDefinition = "TEXT")
     private String descricaoLonga;
 
-    public Game() {
+    public GameDTO() {
     }
 
-    public Game(String titulo, Long id, Integer ano, String genero, String plataforma,
-                String imgUrl, String descricaoCurta, String descricaoLonga) {
-        this.titulo = titulo;
-        this.id = id;
-        this.ano = ano;
-        this.genero = genero;
-        this.plataforma = plataforma;
-        this.imgUrl = imgUrl;
-        this.descricaoCurta = descricaoCurta;
-        this.descricaoLonga = descricaoLonga;
+    public GameDTO(Game entidade) {
+        BeanUtils.copyProperties(entidade, this);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -98,20 +84,5 @@ public class Game {
 
     public void setDescricaoLonga(String descricaoLonga) {
         this.descricaoLonga = descricaoLonga;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Game game = (Game) o;
-        return id == game.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }
